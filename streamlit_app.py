@@ -316,3 +316,7 @@ with tab5:
     # Prepare data for Prophet
     prophet_df = station_df.resample('H').sum().reset_index()
     prophet_df = prophet_df.rename(columns={'transit_timestamp': 'ds', 'ridership': 'y'})
+
+    # Initialize and train the Prophet model with all data
+    model = Prophet()
+    model.fit(prophet_df)
