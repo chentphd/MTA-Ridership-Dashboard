@@ -13,7 +13,7 @@ from datetime import timedelta
 from statsmodels.tsa.stattools import adfuller 
 from prophet import Prophet
 import statsmodels.api as sm
-
+ 
 #from sklearn.preprocessing import MinMaxScaler
 #from keras.models import Sequential
 #from keras.layers import Dense, LSTM
@@ -47,7 +47,8 @@ with tab1:
     st.subheader("Ridership Map Visualization")
 
     # Load the CSV and process the datetime index
-    df_new = pd.read_csv(r"C:\Users\tonychen\Downloads\Ridership__Beginning_Jan_1_2023 to Jan_8_2023.csv")
+    #df_new = pd.read_csv(r"C:\Users\tonychen\Downloads\Ridership__Beginning_Jan_1_2023 to Jan_8_2023.csv") #Local Usage 
+    df_new = pd.read_csv("Ridership__Beginning_Jan_1_2023 to Jan_8_2023.csv")
     df_new.index = pd.to_datetime(df_new['transit_timestamp'])
     df_new = df_new.drop(['transit_timestamp'], axis=1)
 
