@@ -44,7 +44,7 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
     
 ])
 with tab1:
-    st.subheader("Ridership Map Visualization")
+    st.subheader("Ridership Map Visualization in the First Week of 2023")
 
     # Load the CSV and process the datetime index
     #df_new = pd.read_csv(r"C:\Users\tonychen\Downloads\Ridership__Beginning_Jan_1_2023 to Jan_8_2023.csv") #Local Usage 
@@ -260,7 +260,8 @@ with tab4:
 
     # Load and preprocess the data
     #df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023
-    df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+    #df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
+    df_hourly_trends = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024
     # Convert 'transit_timestamp' to datetime format
     df_hourly_trends['transit_timestamp'] = pd.to_datetime(df_hourly_trends['transit_timestamp'])
     # Set 'transit_timestamp' as the index
@@ -287,8 +288,9 @@ with tab4:
 with tab5:
     st.subheader("Predict Hourly Ridership Using Prophet")
     #df_5 = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023 Data 
-    df_5 = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
-    
+    #df_5 = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage 
+    df_5 = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+
     df_5.index = df_5['transit_timestamp']
     df_5 = df_5.drop(['transit_timestamp'], axis=1)
     df_5.index = pd.to_datetime(df_5.index)
@@ -356,8 +358,9 @@ with tab6:
 
     # Load and preprocess the dataset
     #df = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") 
-    df = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
-    
+    #df = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
+    df = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+
     df.index = df['transit_timestamp']
     df = df.drop(['transit_timestamp'], axis=1)
     df.index = pd.to_datetime(df.index)
