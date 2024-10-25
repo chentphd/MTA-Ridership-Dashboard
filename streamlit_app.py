@@ -324,3 +324,38 @@ with tab5:
     # Predict future values: forecast one year (or custom period) beyond the last date in prophet_df
     future = model.make_future_dataframe(periods=24, freq='H')  # 8760 hours = 1 year, 720 hours = 30 days,  168 hours = 7 days, 24 hours = 1 day
     forecast = model.predict(future)
+
+    # Clip negative predictions to 0 (since ridership can't be negative)
+    forecast['yhat'] = forecast['yhat'].clip(lower=0)
+
+    # Dynamically determine the maximum date in prophet_df
+    max_date_prophet_df = prophet_df['ds'].max()
+
+    # Filter the forecast to show only predictions after the last date in prophet_df
+    forecast_future = forecast[forecast['ds'] > max_date_prophet_df]
+
+    # Plot actual ridership
+    fig_pred = px.line(prophet_df, x='ds', y='y', title=f'Hourly Ridership Prediction for {station_for_prediction}', labels={'y': 'Actual Ridership'})
+
+    # Add predicted ridership for the future
+    fig_pred.add_scatter(x=forecast_future['ds'], y=forecast_future['yhat'], mode='lines', name='Predicted Ridership', line=dict(color='#4CC005'))
+
+    # Update layout and rangeslider
+    fig_pred.update_xaxes(rangeslider_visible=True)
+    fig_pred.update_layout(
+        legend_title_text='Ridership',
+        xaxis_title='Date',
+        yaxis_title='Ridership'
+    )
+
+    # Display the plot
+    st.plotly_chart(fig_pred)
+
+    # Show predicted data for future
+    st.subheader('Predicted Ridership Data for Future')
+    result_df = pd.DataFrame({
+        'Date': forecast_future['ds'],
+        'Predicted': forecast_future['yhat']
+    })
+
+    st.dataframe(result_df)
