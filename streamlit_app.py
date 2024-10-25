@@ -359,3 +359,109 @@ with tab5:
     })
 
     st.dataframe(result_df)
+
+with tab6:
+    st.subheader("Predict Hourly Ridership using XGBoost")
+
+    # Load and preprocess the dataset
+    #df = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") 
+    #df = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
+    #df = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+
+    #df.index = df['transit_timestamp']
+    #df = df.drop(['transit_timestamp'], axis=1)
+    #df.index = pd.to_datetime(df.index)
+    #stations = df['station_complex'].unique().tolist()
+
+    df_6 = df
+
+    # Select station for prediction
+    station_for_prediction = st.selectbox('Select a station for prediction', stations, key='selectbox_tab6')
+
+    # Filter data for selected station
+    station_df = df_6[df_6['station_complex'] == station_for_prediction]
+
+    # Convert the transit_timestamp to datetime
+    station_df['transit_timestamp'] = pd.to_datetime(station_df.index)
+
+    # Resample data by hour, summing the ridership to match the hourly aggregation
+    station_df = station_df.resample('H', on='transit_timestamp').sum()
+
+    # Create lag features
+    station_df['lag_1'] = station_df['ridership'].shift(1)
+    station_df['lag_2'] = station_df['ridership'].shift(2)
+    station_df['lag_3'] = station_df['ridership'].shift(3)
+    
+    # Remove NaN values created by shifting
+    station_df = station_df.dropna()
+
+    # Define the features (lagged values) and target (ridership)
+    X = station_df[['lag_1', 'lag_2', 'lag_3']]
+    y = station_df['ridership']
+
+    # Split into train and test sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+
+    # Train the XGBoost model
+    xg_reg = xgb.XGBRegressor(objective='reg:squarederror', n_estimators=100, learning_rate=0.1)
+    xg_reg.fit(X_train, y_train)
+
+    # Predict on the test set
+    y_pred = xg_reg.predict(X_test)
+
+    # Calculate error metrics
+    mse = mean_squared_error(y_test, y_pred)
+    st.write(f"Mean Squared Error: {mse}")
+
+    # Get the maximum date in the dataset for future prediction
+    max_date = station_df.index.max()
+
+    # Predict future values starting from the max date
+    future_hours = 24     # Predict for the next 7 days (168 hours) or 1 day (24 hours)
+    last_known_data = X_test.iloc[-1].values.reshape(1, -1)
+    future_preds = []
+
+    for _ in range(future_hours):
+        next_pred = xg_reg.predict(last_known_data)[0]
+        future_preds.append(next_pred)
+        
+        # Update the last known data with the new prediction
+        last_known_data = np.roll(last_known_data, -1)
+        last_known_data[0, -1] = next_pred
+
+    # Create a future date range starting from max_date + 1 hour
+    future_dates = pd.date_range(start=max_date + pd.Timedelta(hours=1), periods=future_hours, freq='H')
+
+    # Combine dates for plotting
+    actual_dates = station_df.index[len(y_train):len(y_train) + len(y_test)]
+    predicted_dates = actual_dates
+    future_dates = future_dates
+
+    # Create a plot with three distinct series
+    fig = px.line(title=f'Hourly Ridership Prediction for {station_for_prediction}')
+    
+    # Plot actual ridership values
+    fig.add_scatter(x=actual_dates, y=y_test, mode='lines', name='Actual', line=dict(color='blue'))
+    
+    # Plot predicted values for the test set
+    fig.add_scatter(x=predicted_dates, y=y_pred, mode='lines', name='Predicted', line=dict(color='deepskyblue'))
+    
+    # Plot future predicted values
+    fig.add_scatter(x=future_dates, y=future_preds, mode='lines', name='Future Prediction', line=dict(color='green'))
+
+    # Add range slider for better navigation
+    fig.update_xaxes(rangeslider_visible=True)
+
+    # Display the plot
+    st.plotly_chart(fig)
+
+    # Show predicted data for future
+    result_df = pd.DataFrame({
+        'Date': list(actual_dates) + list(future_dates),
+        'Actual': list(y_test) + [None] * future_hours,
+        'Predicted': list(y_pred) + future_preds
+    })
+    st.subheader('Predicted Ridership Data including Future Predictions')
+    st.dataframe(result_df)
+
+# Run streamlit run streamlit_app.py
