@@ -263,11 +263,15 @@ with tab4:
     # Load and preprocess the data
     #df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023
     #df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
-    df_hourly_trends = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024
+    ##############################################
+    #df_hourly_trends = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024
     # Convert 'transit_timestamp' to datetime format
-    df_hourly_trends['transit_timestamp'] = pd.to_datetime(df_hourly_trends['transit_timestamp'])
+    #df_hourly_trends['transit_timestamp'] = pd.to_datetime(df_hourly_trends['transit_timestamp'])
     # Set 'transit_timestamp' as the index
-    df_hourly_trends = df_hourly_trends.set_index('transit_timestamp')
+    #df_hourly_trends = df_hourly_trends.set_index('transit_timestamp')
+    ##############################################
+
+    df_hourly_trends = df
 
     # Station selection
     stations_4 = df_hourly_trends['station_complex'].unique().tolist()
