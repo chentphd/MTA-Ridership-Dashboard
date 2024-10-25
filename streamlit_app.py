@@ -168,3 +168,91 @@ with tab2:
 
     total_ridership = ridership_data['ridership'].sum()
     st.metric("Total Ridership", f"{total_ridership:,}")
+
+with tab3:
+    # Split layout for station comparison
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Station 1")
+
+        # Date range selection for Station 1
+        start_date_1, end_date_1 = st.select_slider(
+            'Select a Start and End date (Station 1)',
+            options=pd.date_range(min_date, max_date).date,
+            value=(min_date, max_date)
+        )
+
+        # Time range selection for Station 1
+        start_time_1, end_time_1 = st.slider(
+            'Select a Time range (Station 1)',
+            min_value=0,
+            max_value=23,
+            value=(0, 23),
+            step=1
+        )
+
+        # Station selection for Station 1
+        selected_stations_1 = st.multiselect('Select stations for Station 1 (leave empty for all)', stations)
+
+        # Filter data for Station 1
+        filtered_df_1 = df[(df.index.date >= start_date_1) & (df.index.date <= end_date_1)]
+        filtered_df_1 = filtered_df_1[(filtered_df_1.index.hour >= start_time_1) & (filtered_df_1.index.hour <= end_time_1)]
+        if selected_stations_1:
+            filtered_df_1 = filtered_df_1[filtered_df_1['station_complex'].isin(selected_stations_1)]
+
+        ridership_data_1 = filtered_df_1.groupby(filtered_df_1.index).sum()
+
+        if not selected_stations_1:
+            ridership_data_1['all_stations'] = 'All Stations'
+            ridership_data_1 = ridership_data_1.loc[:, ['all_stations', 'ridership', 'station_complex']]
+
+        fig_1 = px.line(ridership_data_1, x=ridership_data_1.index, y='ridership', title='Station 1 Ridership')
+        fig_1.update_xaxes(rangeslider_visible=True)
+        st.plotly_chart(fig_1)
+
+        # Display total ridership for Station 1
+        total_ridership_1 = ridership_data_1['ridership'].sum()
+        st.metric("Total Ridership (Station 1)", f"{total_ridership_1:,}")
+
+    with col2:
+        st.subheader("Station 2")
+
+        # Date range selection for Station 2
+        start_date_2, end_date_2 = st.select_slider(
+            'Select a Start and End date (Station 2)',
+            options=pd.date_range(min_date, max_date).date,
+            value=(min_date, max_date)
+        )
+
+        # Time range selection for Station 2
+        start_time_2, end_time_2 = st.slider(
+            'Select a Time range (Station 2)',
+            min_value=0,
+            max_value=23,
+            value=(0, 23),
+            step=1
+        )
+
+        # Station selection for Station 2
+        selected_stations_2 = st.multiselect('Select stations for Station 2 (leave empty for all)', stations)
+
+        # Filter data for Station 2
+        filtered_df_2 = df[(df.index.date >= start_date_2) & (df.index.date <= end_date_2)]
+        filtered_df_2 = filtered_df_2[(filtered_df_2.index.hour >= start_time_2) & (filtered_df_2.index.hour <= end_time_2)]
+        if selected_stations_2:
+            filtered_df_2 = filtered_df_2[filtered_df_2['station_complex'].isin(selected_stations_2)]
+
+        ridership_data_2 = filtered_df_2.groupby(filtered_df_2.index).sum()
+
+        if not selected_stations_2:
+            ridership_data_2['all_stations'] = 'All Stations'
+            ridership_data_2 = ridership_data_2.loc[:, ['all_stations', 'ridership', 'station_complex']]
+
+        fig_2 = px.line(ridership_data_2, x=ridership_data_2.index, y='ridership', title='Station 2 Ridership')
+        fig_2.update_xaxes(rangeslider_visible=True)
+        st.plotly_chart(fig_2)
+
+        # Display total ridership for Station 2
+        total_ridership_2 = ridership_data_2['ridership'].sum()
+        st.metric("Total Ridership (Station 2)", f"{total_ridership_2:,}")
