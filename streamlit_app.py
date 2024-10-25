@@ -402,6 +402,3 @@ with tab6:
     # Split into train and test sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
 
-    # Train the XGBoost model
-    xg_reg = xgb.XGBRegressor(objective='reg:squarederror', n_estimators=100, learning_rate=0.1)
-    xg_reg.fit(X_train, y_train)
