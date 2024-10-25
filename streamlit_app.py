@@ -399,6 +399,4 @@ with tab6:
     X = station_df[['lag_1', 'lag_2', 'lag_3']]
     y = station_df['ridership']
 
-    # Split into train and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
-
+  
