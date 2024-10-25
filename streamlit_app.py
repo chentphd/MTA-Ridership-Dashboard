@@ -313,4 +313,6 @@ with tab5:
     # Filter data for selected station
     station_df = df_5[df_5['station_complex'] == station_for_prediction]
 
-    
+    # Prepare data for Prophet
+    prophet_df = station_df.resample('H').sum().reset_index()
+    prophet_df = prophet_df.rename(columns={'transit_timestamp': 'ds', 'ridership': 'y'})
