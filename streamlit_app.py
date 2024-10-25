@@ -256,3 +256,34 @@ with tab3:
         # Display total ridership for Station 2
         total_ridership_2 = ridership_data_2['ridership'].sum()
         st.metric("Total Ridership (Station 2)", f"{total_ridership_2:,}")
+
+with tab4: 
+    st.subheader("Hourly Trends by Station")
+
+    # Load and preprocess the data
+    #df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023
+    #df_hourly_trends = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
+    df_hourly_trends = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024
+    # Convert 'transit_timestamp' to datetime format
+    df_hourly_trends['transit_timestamp'] = pd.to_datetime(df_hourly_trends['transit_timestamp'])
+    # Set 'transit_timestamp' as the index
+    df_hourly_trends = df_hourly_trends.set_index('transit_timestamp')
+
+    # Station selection
+    stations_4 = df_hourly_trends['station_complex'].unique().tolist()
+    station_hourly = st.selectbox('Select a station for hourly trend analysis', stations_4)
+    
+    # Filter data for the selected station
+    station_df_hourly = df_hourly_trends[df_hourly_trends['station_complex'] == station_hourly]
+    
+    # Group by hour of day and calculate mean ridership
+    hourly_trends = station_df_hourly.groupby(station_df_hourly.index.hour)['ridership'].mean()
+    
+    # Plot hourly trends
+    fig_hourly = px.line(hourly_trends, x=hourly_trends.index, y=hourly_trends.values, 
+                         title=f'Average Hourly Ridership for {station_hourly}', 
+                         labels={'x': 'Hour of Day', 'y': 'Average Ridership'})
+
+    fig_hourly.update_xaxes(rangeslider_visible=True)                      
+    st.plotly_chart(fig_hourly)
+
