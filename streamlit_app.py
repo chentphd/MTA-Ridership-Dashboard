@@ -293,3 +293,24 @@ with tab4:
 
 
 
+
+with tab5:
+    st.subheader("Predict Hourly Ridership Using Prophet")
+    #df_5 = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023 Data 
+    #df_5 = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage 
+    #df_5 = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+    ######################################
+    #df_5.index = df_5['transit_timestamp']
+    #df_5 = df_5.drop(['transit_timestamp'], axis=1)
+    #df_5.index = pd.to_datetime(df_5.index)
+    ###############################################
+    df_5 = df
+    stations_prophet = df_5['station_complex'].unique().tolist()
+
+    # Select station for prediction
+    station_for_prediction = st.selectbox('Select a station for prediction', stations_prophet)
+
+    # Filter data for selected station
+    station_df = df_5[df_5['station_complex'] == station_for_prediction]
+
+    
