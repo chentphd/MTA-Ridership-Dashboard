@@ -99,3 +99,72 @@ with tab1:
 #df = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023 Data 
 #df = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
 df = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+
+
+# Set 'transit_timestamp' as the index and convert to datetime
+df.index = df['transit_timestamp']
+df = df.drop(['transit_timestamp'], axis=1)
+df.index = pd.to_datetime(df.index)
+
+with tab2:
+    # Date range selection
+    min_date = df.index.min().date()
+    max_date = df.index.max().date()
+
+    # Add a progress bar for date selection
+    progress_text = "Processing date selection. Please wait..."
+    date_bar = st.progress(0, text=progress_text)
+
+    # Add a select slider for Date range
+    start_date, end_date = st.select_slider(
+        'Select a Start and End date',
+        options=pd.date_range(min_date, max_date).date,
+        value=(min_date, max_date)
+    )
+
+    # Simulate progress for date selection
+    for percent_complete in range(100):
+        time.sleep(0.01)
+        date_bar.progress(percent_complete + 1, text=progress_text)
+    date_bar.empty()  # Clear the progress bar
+
+    # Station selection
+    stations = df['station_complex'].unique().tolist()
+
+    # Add a progress bar for station selection
+    progress_text = "Processing station selection. Please wait..."
+    station_bar = st.progress(0, text=progress_text)
+
+    # Station selection
+    selected_stations = st.multiselect('Select stations (leave empty for all)', stations)
+
+    # Simulate progress for station selection
+    for percent_complete in range(100):
+        time.sleep(0.01)
+        station_bar.progress(percent_complete + 1, text=progress_text)
+    station_bar.empty()  # Clear the progress bar
+
+    # Filter data based on selection
+    filtered_df = df[(df.index.date >= start_date) & (df.index.date <= end_date)]
+    if selected_stations:
+        filtered_df = filtered_df[filtered_df['station_complex'].isin(selected_stations)]
+
+    # Group by timestamp and sum ridership
+    ridership_data = filtered_df.groupby(filtered_df.index).sum()
+
+    # If all stations are selected, format the data with 'All Stations'
+    if not selected_stations:
+        ridership_data['all_stations'] = 'All Stations'
+        ridership_data = ridership_data.loc[:, ['all_stations', 'ridership', 'station_complex']]
+
+    # Create line chart
+    fig = px.line(ridership_data, x=ridership_data.index, y='ridership', title='Ridership Over Time')
+    fig.update_xaxes(rangeslider_visible=True)
+    st.plotly_chart(fig)
+
+    # Display the data used
+    st.subheader('Ridership Data Used')
+    st.dataframe(ridership_data)
+
+    total_ridership = ridership_data['ridership'].sum()
+    st.metric("Total Ridership", f"{total_ridership:,}")
