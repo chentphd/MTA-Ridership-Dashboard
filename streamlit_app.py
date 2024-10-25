@@ -322,7 +322,5 @@ with tab5:
     model.fit(prophet_df)
 
     # Predict future values: forecast one year (or custom period) beyond the last date in prophet_df
-    future = model.make_future_dataframe(periods=168, freq='H')  # 8760 hours = 1 year, 720 hours = 30 days,  168 hours = 7 days 
+    future = model.make_future_dataframe(periods=24, freq='H')  # 8760 hours = 1 year, 720 hours = 30 days,  168 hours = 7 days, 24 hours = 1 day
     forecast = model.predict(future)
-
-    
