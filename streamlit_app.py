@@ -97,7 +97,9 @@ with tab1:
 
 # Load your dataset
 #df = pd.read_csv(r"C:\Users\tonychen\Documents\Python Files\MTA Peak Ridership\MTA_Subway_Ridership_2023.csv") #Only 2023 Data 
-df = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+#df = pd.read_csv(r"C:\Users\tonychen\Downloads\MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 #Local Usage
+df = pd.read_csv("MTA_Subway_Hourly_Ridership__Beginning_July_2020_20241024.csv") #All Data from 2022 to 2024 
+
 
 # Set 'transit_timestamp' as the index and convert to datetime
 df.index = df['transit_timestamp']
