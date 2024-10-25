@@ -275,7 +275,7 @@ with tab4:
 
     # Station selection
     stations_4 = df_hourly_trends['station_complex'].unique().tolist()
-    station_hourly = st.selectbox('Select a station for hourly trend analysis', stations_4)
+    station_hourly = st.selectbox('Select a station for hourly trend analysis', stations_4, key = 'selectbox_tab4')
     
     # Filter data for the selected station
     station_df_hourly = df_hourly_trends[df_hourly_trends['station_complex'] == station_hourly]
@@ -290,4 +290,6 @@ with tab4:
 
     fig_hourly.update_xaxes(rangeslider_visible=True)                      
     st.plotly_chart(fig_hourly)
+
+
 
