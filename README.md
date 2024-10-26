@@ -14,7 +14,10 @@ This project is part of the **MTA Open Data Challenge**, inviting community memb
 - Interactive map with hover details and zoom functionality.
 
 
-![Ridership Map Visualization](Screenshot 2024-10-25 200933A.png)
+- Interactive map with hover details and zoom functionality.
+
+![Ridership Map Visualization](Screenshot_2024-10-25_200933A.png)
+
 
 ### 2. Station Ridership
 - **Tab 2**: View detailed ridership data over a selected date range.
