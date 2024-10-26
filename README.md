@@ -88,8 +88,8 @@ This project is part of the **MTA Open Data Challenge**, inviting community memb
 
 ## Data Sources
 
-- **MTA Open Data**: [data.ny.gov](https://data.ny.gov)
-- The dashboard utilizes MTA's subway ridership data from **July 2020 to October 2024**.
+- **MTA Open Data**: [data.ny.gov]([https://data.ny.gov](https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-Beginning-July-2020/wujg-7c2s/about_data))
+- The dashboard utilizes MTA's subway ridership data MTA Subway Hourly Ridership: Beginning July 2020.
 
 ## Contributing
 
