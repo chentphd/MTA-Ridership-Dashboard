@@ -13,9 +13,6 @@ This project is part of the **MTA Open Data Challenge**, inviting community memb
 - Allows users to select a date range and view the spatial distribution of ridership.
 - Interactive map with hover details and zoom functionality.
 
-![Ridership Map Visualization](Screenshot 2024-10-25 200933A.png)
-
-
 ### 2. Station Ridership
 - **Tab 2**: View detailed ridership data over a selected date range.
 - Users can choose specific stations or view aggregated data across all stations.
