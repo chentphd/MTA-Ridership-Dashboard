@@ -18,7 +18,7 @@ This project is part of the **MTA Open Data Challenge**, inviting community memb
 
 ![Ridership Map Visualization](Screenshot_2024-10-25_200933A.png)
 Screenshot 2024-10-25 200933A.png
-![Ridership Map Visualization](Screenshot 2024-10-25 200933A.png)
+![Ridership Map Visualization](Tab1.jpg)
 
 ### 2. Station Ridership
 - **Tab 2**: View detailed ridership data over a selected date range.
