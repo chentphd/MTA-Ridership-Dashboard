@@ -2,7 +2,7 @@
 ## MTA Subway Station Ridership Dashboard
 
 ### Note:
-🚧 **Dashboard Unavailability**: The link to the live dashboard is currently down due to bandwidth issues. We are working to resolve this. Thank you for your patience!
+🚧 **Dashboard Unavailability**: The link to the live dashboard is currently down due to bandwidth issues. I'm currently working to resolve this. Thank you for your patience!
 
 [https://chentphd-mta-ridership-dashboard-streamlit-app-ou0xe0.streamlit.app/](https://chentphd-mta-ridership-dashboard-streamlit-app-ou0xe0.streamlit.app/)
 
