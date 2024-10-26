@@ -13,11 +13,6 @@ This project is part of the **MTA Open Data Challenge**, inviting community memb
 - Allows users to select a date range and view the spatial distribution of ridership.
 - Interactive map with hover details and zoom functionality.
 
-
-- Interactive map with hover details and zoom functionality.
-
-![Ridership Map Visualization](Screenshot_2024-10-25_200933A.png)
-Screenshot 2024-10-25 200933A.png
 ![Ridership Map Visualization](Tab1.jpg)
 
 ### 2. Station Ridership
@@ -26,15 +21,21 @@ Screenshot 2024-10-25 200933A.png
 - Line charts display ridership trends, allowing for easy analysis of time-based changes.
 - Total ridership for the selected period is displayed as a metric.
 
+![Station Ridership](Tab2.jpg)
+
 ### 3. Station Comparison
 - **Tab 3**: Compare ridership between two selected subway stations.
 - Users can customize date and time ranges for each station.
 - Side-by-side line charts offer a clear view of ridership trends between two stations.
 
+![Station Comparison](tab3.jpg)
+
 ### 4. Hourly Trends
 - **Tab 4**: Analyze hourly ridership trends for a selected station.
 - Displays the average ridership by hour of the day, helping identify peak times.
 - Interactive line chart for a detailed view of hourly ridership patterns.
+
+![Hourly Trends](tab4.jpg)
 
 ### 5. Ridership Prediction Using Prophet
 - **Tab 5**: Predict hourly ridership using the **Prophet** time series model.
@@ -42,11 +43,16 @@ Screenshot 2024-10-25 200933A.png
 - The model predicts ridership for the next 24 hours and visualizes both actual and forecasted data.
 - Provides a detailed dataframe of predicted ridership data.
 
+![Ridership Prediction Using Prophet](tab5.jpg)
+
+
 ### 6. Ridership Prediction Using XGBoost
 - **Tab 6**: Predict future hourly ridership using **XGBoost**, a powerful machine learning algorithm.
 - Users can predict up to 24 or 168 hours into the future, starting from the latest data point.
 - Displays three lines: actual, predicted, and future predictions for clear trend analysis.
 - The results are presented in an interactive line chart and detailed data table.
+
+![Ridership Prediction Using XGBoost](tab6.jpg)
 
 ## Technologies Used
 - **Streamlit**: For building an interactive web application.
